@@ -4,7 +4,7 @@ import { CalculatorService } from './calculator.service';
 class LoanDataDto {
     loanAmount: number;
     interestRate: number;
-    initialRepayment: number;
+    repaymentRate: number;
     years: number;
 }
 
