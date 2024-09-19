@@ -119,7 +119,6 @@ export default function LoanCalculatorForm() {
                             name="loanAmount"
                             value={formData.loanAmount}
                             onChange={handleInputChange}
-                            description=""
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -128,16 +127,14 @@ export default function LoanCalculatorForm() {
                             name="interestRate"
                             value={formData.interestRate}
                             onChange={handleInputChange}
-                            description=""
                         />
                     </Grid>
                     <Grid item xs={12}>
                         <NumberInput
                             label="Tilgung (% p.a.)"
-                            name="repayment"
+                            name="repaymentRate"
                             value={formData.repaymentRate}
                             onChange={handleInputChange}
-                            description=""
                         />
                     </Grid>
                     <Grid item xs={12}>

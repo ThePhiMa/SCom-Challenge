@@ -8,10 +8,9 @@ interface NumberInputProps {
     name: string;
     value: number;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    description: string;
 }
 
-export default function NumberInput({ label, name, value, onChange, description }: NumberInputProps) {
+export default function NumberInput({ label, name, value, onChange }: NumberInputProps) {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleFocus = () => {
@@ -29,7 +28,6 @@ export default function NumberInput({ label, name, value, onChange, description 
             value={value}
             onChange={onChange}
             onFocus={handleFocus}
-            helperText={description}
             inputRef={inputRef}
             InputLabelProps={{
                 shrink: true,
