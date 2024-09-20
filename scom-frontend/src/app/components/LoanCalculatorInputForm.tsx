@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import NumberInput from './NumberInput';
 
+// Form data for communication to server
 interface FormData {
     loanAmount: number;
     interestRate: number;
@@ -23,6 +24,7 @@ interface FormData {
     years: number;
 }
 
+// Result data for loan calculations
 interface CalculationResult {
     monthlyPayment: number;
     remainingDebt: number;
@@ -44,9 +46,7 @@ export default function LoanCalculatorForm() {
     });
 
     const [calculationResult, setCalculationResult] = useState<CalculationResult | null>(null);
-
     const [isInitialCalculationDone, SetIsInitialCalculationDone] = useState(false);
-
     const [connectionError, setConnectionError] = useState<string | null>(null);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,20 +64,9 @@ export default function LoanCalculatorForm() {
         }));
     };
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        await sendDataToServer();
-        SetIsInitialCalculationDone(true);
-    };
-
-    useEffect(() => {
-        if (isInitialCalculationDone) {
-            sendDataToServer();
-        }
-    }, [formData, isInitialCalculationDone]);
-
     const sendDataToServer = async () => {
         console.log('Loan data submitted:', formData);
+        setConnectionError(null);
 
         try {
             const response = await fetch('http://localhost:3001/calculator/calculate', {
@@ -89,7 +78,6 @@ export default function LoanCalculatorForm() {
             });
             if (response.ok) {
                 console.log('Form submitted successfully');
-                // Handle successful submission (e.g., show a success message)
                 const result = await response.json();
                 console.log("Response from server:", result);
                 setCalculationResult(result);
@@ -103,6 +91,18 @@ export default function LoanCalculatorForm() {
             setConnectionError(`Error submitting form: ${error instanceof Error ? error.message : String(error)}`);
         }
     }
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        await sendDataToServer();
+        SetIsInitialCalculationDone(true);
+    };
+
+    useEffect(() => {
+        if (isInitialCalculationDone) {
+            sendDataToServer();
+        }
+    }, [formData, isInitialCalculationDone]);
 
     return (
         <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
@@ -179,10 +179,10 @@ export default function LoanCalculatorForm() {
                                                         <TableCell component="th" scope="row">
                                                             {row.year}
                                                         </TableCell>
-                                                        <TableCell align="right">{row.payment.toFixed(2)}€</TableCell>
-                                                        <TableCell align="right">{row.interestPortion.toFixed(2)}€</TableCell>
-                                                        <TableCell align="right">{row.repaymentPortion.toFixed(2)}€</TableCell>
-                                                        <TableCell align="right">{row.remainingDebt.toFixed(2)}€</TableCell>
+                                                        <TableCell align="right">{row.payment}€</TableCell>
+                                                        <TableCell align="right">{row.interestPortion}€</TableCell>
+                                                        <TableCell align="right">{row.repaymentPortion}€</TableCell>
+                                                        <TableCell align="right">{row.remainingDebt}€</TableCell>
                                                     </TableRow>
                                                 ))}
                                             </TableBody>

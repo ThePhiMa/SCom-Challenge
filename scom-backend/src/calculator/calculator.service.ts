@@ -13,9 +13,6 @@ function calculateLoanData(loanAmount: number, interestRate: number, repaymentRa
     interestRate /= 100;
     repaymentRate /= 100;
 
-    const monthlyInterestRate = interestRate / 12;
-    const totalMonths = years * 12;
-
     // Calculate initial repayment amount for the first year
     const yearlyRepaymentAmount = loanAmount * repaymentRate;
 
@@ -28,6 +25,7 @@ function calculateLoanData(loanAmount: number, interestRate: number, repaymentRa
     let remainingDebt = loanAmount;
     const yearlyBreakdown = [];
 
+    // Calculate yearly breakdown
     for (let year = 1; year <= years; year++) {
         const yearlyInterest = remainingDebt * interestRate;
         const yearlyRepayment = yearlyPayment - yearlyInterest;
@@ -35,10 +33,10 @@ function calculateLoanData(loanAmount: number, interestRate: number, repaymentRa
 
         yearlyBreakdown.push({
             year,
-            payment: yearlyPayment,
-            interestPortion: yearlyInterest,
-            repaymentPortion: yearlyRepayment,
-            remainingDebt: Math.max(0, remainingDebt)
+            payment: yearlyPayment.toFixed(2),
+            interestPortion: yearlyInterest.toFixed(2),
+            repaymentPortion: yearlyRepayment.toFixed(2),
+            remainingDebt: (Math.max(0, remainingDebt).toFixed(2))
         });
     }
 
