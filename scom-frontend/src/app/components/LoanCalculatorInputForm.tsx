@@ -49,6 +49,7 @@ export default function LoanCalculatorForm() {
     const [isInitialCalculationDone, SetIsInitialCalculationDone] = useState(false);
     const [connectionError, setConnectionError] = useState<string | null>(null);
 
+    // Change event for input fields
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setFormData(prevData => ({
@@ -57,6 +58,7 @@ export default function LoanCalculatorForm() {
         }));
     };
 
+    // Change event for slider
     const handleSliderChange = (_event: Event, newValue: number | number[]) => {
         setFormData(prevData => ({
             ...prevData,
@@ -64,6 +66,7 @@ export default function LoanCalculatorForm() {
         }));
     };
 
+    // Send input and slider data to server and handle returned data
     const sendDataToServer = async () => {
         console.log('Loan data submitted:', formData);
         setConnectionError(null);
@@ -92,12 +95,14 @@ export default function LoanCalculatorForm() {
         }
     }
 
+    // "Submit" button event
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         await sendDataToServer();
         SetIsInitialCalculationDone(true);
     };
 
+    // Effect for updating the data when change occurs
     useEffect(() => {
         if (isInitialCalculationDone) {
             sendDataToServer();

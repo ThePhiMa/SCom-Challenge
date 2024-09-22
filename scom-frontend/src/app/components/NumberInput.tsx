@@ -13,6 +13,7 @@ interface NumberInputProps {
 export default function NumberInput({ label, name, value, onChange }: NumberInputProps) {
     const inputRef = useRef<HTMLInputElement>(null);
 
+    // Auto select input value on focus
     const handleFocus = () => {
         if (inputRef.current) {
             inputRef.current.select();
